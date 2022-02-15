@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer, useRef } from "react";
+import { setJob, addJob, deleteJob } from "./redux/action";
+import { reducer, initState } from "./redux/reducer";
 
-function App() {
+export default function App() {
+  const [state, dispatch] = useReducer(reducer, initState);
+  const inputRef = useRef();
+
+  const handleAddJob = () => {
+    dispatch(addJob(state.job));
+    dispatch(setJob(""));
+    inputRef.current.focus();
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Todo</h1>
+      <div>
+        <input
+          value={state.job}
+          ref={inputRef}
+          placeholder="Enter todo..."
+          onChange={(e) => {
+            dispatch(setJob(e.target.value));
+          }}
+        />
+        <button onClick={handleAddJob}> Add </button>
+      </div>
+      <div>
+        <ul>
+          {state.jobs.map((job, index) => {
+            return (
+              <li key={index}>
+                {job}
+                <span
+                  onClick={() => dispatch(deleteJob(index))}
+                  style={{ marginLeft: "12px" }}
+                >
+                  {" "}
+                  X
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
-
-export default App;
