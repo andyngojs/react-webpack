@@ -1,6 +1,6 @@
 import React, { useReducer, useRef } from "react";
 import { setJob, addJob, deleteJob } from "./redux/action";
-import { reducer, initState } from "./redux/reducer";
+import reducer, { initState } from "./redux/reducer";
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initState);

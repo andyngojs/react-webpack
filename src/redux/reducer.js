@@ -4,7 +4,7 @@ export const initState = {
   jobs: [],
 };
 
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case actions.SET_JOB:
       return {
@@ -27,3 +27,5 @@ export const reducer = (state, action) => {
       throw new Error("invalid action");
   }
 };
+
+export default reducer;
