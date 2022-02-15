@@ -1,10 +1,14 @@
-import React, { useReducer, useRef } from "react";
+import React, { useReducer, useRef, useContext } from "react";
+import Content from "./Content";
 import { setJob, addJob, deleteJob } from "./redux/action";
 import reducer, { initState } from "./redux/reducer";
+import { ThemeContext } from "./Context/ThemeContext";
+import "./App.scss";
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initState);
   const inputRef = useRef();
+  const toggleContext = useContext(ThemeContext);
 
   const handleAddJob = () => {
     dispatch(addJob(state.job));
@@ -13,7 +17,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className={`container ${toggleContext.theme}`}>
       <h1>Todo</h1>
       <div>
         <input
@@ -44,6 +48,11 @@ export default function App() {
           })}
         </ul>
       </div>
+
+      <hr></hr>
+
+      <button onClick={toggleContext.handleTheme}>Toggle theme</button>
+      <Content />
     </div>
   );
 }
